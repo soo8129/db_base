@@ -7,15 +7,15 @@ class Tibero:
         self.db = None
         self.cursor = None
 
-    def get_window_db(self, dsn):
-        self.db = pyodbc.connect(DSN=dsn)
+    def get_window_db(self):
+        self.db = pyodbc.connect(DSN=self.dsn)
         self.db.setdecoding(pyodbc.SQL_CHAR, encoding='cp949')
         self.db.setdecoding(pyodbc.SQL_WCHAR, encoding='cp949')
         self.db.setencoding(encoding='cp949')
         return self.db
         
-    def get_linux_db(self, dsn):
-        self.db = pyodbc.connect(DSN=dsn, CHARSET='UTF-8')
+    def get_linux_db(self):
+        self.db = pyodbc.connect(DSN=self.dsn, CHARSET='UTF-8')
         self.db.setdecoding(pyodbc.SQL_CHAR, encoding='utf-32le')
         self.db.setdecoding(pyodbc.SQL_WCHAR, encoding='utf-32le')
         self.db.setdecoding(pyodbc.SQL_WMETADATA, encoding='utf-32le')
@@ -24,7 +24,7 @@ class Tibero:
 
     def get_cursor(self):
         if sys.platform == 'win32':
-            self.cursor = self.get_window_db(self.dsn).cursor()
+            self.cursor = self.get_window_db().cursor()
         elif sys.platform.startswith('linux'):
             self.cursor = self.get_linux_db().cursor()
         else:
@@ -51,11 +51,11 @@ class Tibero:
 def main():
     cdb = Tibero('CDB')
     ndb = Tibero('RGOUTSIGHT')
-    print(ndb.db, ndb.cursor)
-    ndb.connect()
-    print(ndb.db, ndb.cursor)
-    ndb.disconnect()
-    print(ndb.db, ndb.cursor)
+    print(cdb.db, cdb.cursor)
+    cdb.connect()
+    print(cdb.db, cdb.cursor)
+    cdb.disconnect()
+    print(cdb.db, cdb.cursor)
     
     
 if __name__ == '__main__':
