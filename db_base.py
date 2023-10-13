@@ -57,6 +57,5 @@ def main():
     cdb.disconnect()
     print(cdb.db, cdb.cursor)
     
-    
 if __name__ == '__main__':
     main()
