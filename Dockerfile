@@ -1,4 +1,4 @@
-FROM db_base:latest
+FROM db_base:1.0
 
 MAINTAINER soo8129 <soohyeok_kim@tmax.co.kr>
 
